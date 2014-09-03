@@ -46,7 +46,7 @@ else:
 ######################################################################
 ######################################################################
 
-class SimulationJob (workerpool.Job):
+class SimulationJob(workerpool.Job):
     "Job to simulate things"
     def __init__ (self, cmdline):
         self.cmdline = cmdline
@@ -57,7 +57,7 @@ class SimulationJob (workerpool.Job):
 pool = workerpool.WorkerPool(size = multiprocessing.cpu_count())
 
 class Processor:
-    def run (self):
+    def run(self):
         if args.list:
             print "    " + self.name
             return
@@ -75,28 +75,32 @@ class Processor:
             if args.graph:
                 self.graph ()
 
-    def graph (self):
-        subprocess.call ("./graphs/%s.R" % self.name, shell=True)
+    def graph(self):
+        pass
 
-class Scenario (Processor):
+class Scenario(Processor):
     def __init__ (self, name):
         self.name = name
         # other initialization, if any
 
-    def simulate (self):
-        cmdline = ["./build/SCENARIO_TO_RUN"]
-        job = SimulationJob (cmdline)
-        pool.put (job)
+    def simulate(self):
+        cmdline = ["./build/%s" % self.name]
+        job = SimulationJob(cmdline)
+        pool.put(job)
 
-    def postprocess (self):
+    def postprocess(self):
         # any postprocessing, if any
         pass
 
 try:
-    # Simulation, processing, and graph building
-    fig = Scenario (name="NAME_TO_CONFIGURE")
-    fig.run ()
+    # Simulation
+    fig = Scenario(name="example1"); fig.run()
+    fig = Scenario(name="example2"); fig.run()
+    fig = Scenario(name="example3"); fig.run()
+    fig = Scenario(name="example4"); fig.run()
+    fig = Scenario(name="example5"); fig.run()
+    fig = Scenario(name="example6"); fig.run()
 
 finally:
-    pool.join ()
-    pool.shutdown ()
+    pool.join()
+    pool.shutdown()
