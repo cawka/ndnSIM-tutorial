@@ -93,11 +93,3 @@ or
 
     PKG_LIBRARY_PATH=/usr/local/lib NS_VIS_ASSIGN=1 ./waf --run <scenario_name> --vis
 
-Available simulations
-=====================
-
-<Scenario Name>
----------------
-
-Description
-
